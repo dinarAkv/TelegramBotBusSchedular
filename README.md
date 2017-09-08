@@ -1,7 +1,7 @@
 # TelegramBotBusSchedular
 Telegram bot for showing schedular of all intercity bus stations in Chuvash republic.
 
-##To run
+## To run
 
 1) There is need to determine next enviroment variables (of operating system):
 
