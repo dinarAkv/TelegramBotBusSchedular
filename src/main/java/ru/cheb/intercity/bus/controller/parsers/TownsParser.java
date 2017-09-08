@@ -4,13 +4,11 @@ import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import ru.cheb.intercity.bus.controller.helper.PropertiesHelper;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Properties;
 
 
 /**
@@ -20,8 +18,14 @@ public class TownsParser {
 
     final static Logger logger = Logger.getLogger(TownsParser.class);
 
-    private static String propertyUrlWithStations = "avtoVasUrlWithStations";
-    private static String propertyFileName = "./src/main/resources/params.properties";
+
+
+
+    private static final String htmlP = "p";
+    private static final String htmlA = "a";
+    private static final String htmlB = "b";
+    private static final String htmlHref = "href";
+
 
 
     /**
@@ -32,16 +36,17 @@ public class TownsParser {
      * @throws IOException
      */
     public static Map<String,String> getTownsSchedulerUrls() throws IOException {
-        String hostUrl = getStationsWebSiteUrl(propertyFileName, propertyUrlWithStations);
+        String hostUrl = PropertiesHelper.getPropByKeyInProperties(ParserConstants.propertyFileName,
+                                                                   ParserConstants.propKeyUrlWithStations);
 
         Document doc = Jsoup.connect(hostUrl).get();
-        Elements elements = doc.getElementsByClass("news-list").select("p");
+        Elements elements = doc.getElementsByClass(ParserConstants.divClassStationRef).select(htmlP);
 
         Map<String, String> descriptionAndUrl = new LinkedHashMap<>();
 
         elements.stream().forEach(element -> {
-            String urlDescription = element.select("a").attr("href");
-            String relationalUrl = element.select("a").select("b").text();
+            String urlDescription = element.select(htmlA).attr(htmlHref);
+            String relationalUrl = element.select(htmlA).select(htmlB).text();
 
             descriptionAndUrl.put(relationalUrl, urlDescription);
         });
@@ -50,27 +55,7 @@ public class TownsParser {
     }
 
 
-    /**
-     * Function return website url of bust stations in Chuvash republic.
-     * @param fileName - name of "*.properties" file.
-     * @param propertyKey - key string of particular property.
-     * @return - host website url.
-     */
-    protected static String getStationsWebSiteUrl(String fileName, String propertyKey)
-    {
-        Properties properties = new Properties();
 
-        try(InputStream input = new FileInputStream(fileName)) {
-            properties.load(input);
-            return properties.getProperty(propertyKey);
-        }
-        catch (IOException ex)
-        {
-            logger.error(ex.getMessage());
-        }
-
-        throw new IllegalStateException();
-    }
 
 
 }

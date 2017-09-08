@@ -4,9 +4,9 @@ package ru.cheb.intercity.bus.controller.parsers;
 
 
 
-import org.junit.Assert;
+
 import org.junit.Test;
-import org.springframework.util.ReflectionUtils;
+
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,7 +16,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertTrue;
 
 
