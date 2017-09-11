@@ -1,10 +1,9 @@
-package ru.cheb.intercity.bus.controller.parsers;
+package ru.cheb.intercity.bus.parsers;
 
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import org.junit.Assert;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertTrue;

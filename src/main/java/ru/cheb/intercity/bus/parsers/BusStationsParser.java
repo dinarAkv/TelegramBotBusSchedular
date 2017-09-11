@@ -1,10 +1,11 @@
-package ru.cheb.intercity.bus.controller.parsers;
+package ru.cheb.intercity.bus.parsers;
 
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import ru.cheb.intercity.bus.controller.helper.PropertiesHelper;
+import ru.cheb.intercity.bus.helper.PropertiesHelper;
+import ru.cheb.intercity.bus.constants.PropertyConstants;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -12,11 +13,11 @@ import java.util.Map;
 
 
 /**
- * This class parse towns from bus station of Chuvash republic.
+ * This class parses bus stations url and description in Chuvash republic.
  */
-public class TownsParser {
+public class BusStationsParser {
 
-    final static Logger logger = Logger.getLogger(TownsParser.class);
+    final static Logger logger = Logger.getLogger(BusStationsParser.class);
 
 
 
@@ -35,11 +36,11 @@ public class TownsParser {
      *  and value is brief description of this station (where station locate).
      * @throws IOException
      */
-    public static Map<String,String> getTownsSchedulerUrls() throws IOException {
-        String hostUrl = PropertiesHelper.getPropByKeyInProperties(ParserConstants.propertyFileName,
-                                                                   ParserConstants.propKeyUrlWithStations);
+    public static Map<String,String> getBusStationsSchedulerUrls() throws IOException {
+        String schedulerUrl = PropertiesHelper.getPropByKeyInProperties(PropertyConstants.propertyFileName,
+                                                                   PropertyConstants.propKeyUrlWithStations);
 
-        Document doc = Jsoup.connect(hostUrl).get();
+        Document doc = Jsoup.connect(schedulerUrl).get();
         Elements elements = doc.getElementsByClass(ParserConstants.divClassStationRef).select(htmlP);
 
         Map<String, String> descriptionAndUrl = new LinkedHashMap<>();

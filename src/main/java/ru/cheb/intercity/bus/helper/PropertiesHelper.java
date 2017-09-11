@@ -1,8 +1,7 @@
-package ru.cheb.intercity.bus.controller.helper;
+package ru.cheb.intercity.bus.helper;
 
 
 import org.apache.log4j.Logger;
-import ru.cheb.intercity.bus.controller.parsers.TownsParser;
 
 import java.io.FileInputStream;
 import java.io.IOException;

@@ -2,7 +2,7 @@ package ru.cheb.intercity.bus.controller;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import ru.cheb.intercity.bus.controller.telegrambot.TelegramBotPolling;
+import ru.cheb.intercity.bus.telegrambot.TelegramBotPolling;
 
 
 // Token: 377263517:AAH5mLjwUv0-ROXzLRkiml28V9DXf8bqW6E

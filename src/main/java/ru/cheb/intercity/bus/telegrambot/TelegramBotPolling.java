@@ -1,22 +1,22 @@
-package ru.cheb.intercity.bus.controller.telegrambot;
+package ru.cheb.intercity.bus.telegrambot;
 
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
-import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardButton;
+import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
+import ru.cheb.intercity.bus.constants.EnvironmentVarConstants;
 
+import java.io.IOException;
 import java.util.Map;
 
 
 public class TelegramBotPolling extends TelegramLongPollingBot {
 
-    private final String botUsername = "TELEGRAM_BOT_USERNAME";
-    private final String botTokenEnv = "TELEGRAM_BOT_TOKEN";
+
 
 
     public static void registerBot()
@@ -34,13 +34,13 @@ public class TelegramBotPolling extends TelegramLongPollingBot {
     @Override
     public String getBotToken() {
         Map<String, String> env = System.getenv();
-        return env.get(botTokenEnv);
+        return env.get(EnvironmentVarConstants.botTokenEnv);
     }
 
     @Override
     public String getBotUsername() {
         Map<String, String> env = System.getenv();
-        return env.get(botUsername);
+        return env.get(EnvironmentVarConstants.botUsername);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class TelegramBotPolling extends TelegramLongPollingBot {
         Message message = update.getMessage();
         if (message != null && message.getText().equals("hello"))
         {
-            sendMsg(message, "hello");
+            sendMsg(message, "Пожалуйста, выберите интересующее вас расписание автовокзала:");
         }
         else {
             sendMsg(message, "Uknown message.");
@@ -57,21 +57,47 @@ public class TelegramBotPolling extends TelegramLongPollingBot {
 
     private void sendMsg(Message message, String text) {
         SendMessage sendMessage = new SendMessage();
-        sendMessage.enableMarkdown(true);
+        sendMessage.enableMarkdown(false);
         sendMessage.setChatId(message.getChatId().toString());
         sendMessage.setReplyToMessageId(message.getMessageId());
         sendMessage.setText(text);
 
-        InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
-        inlineKeyboardButton.setText("Button");
 
 
+//        InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
+//        inlineKeyboardButton.setText("Button");
+//        inlineKeyboardButton.setUrl("https://core.telegram.org");
+//
+//        InlineKeyboardButton inlineKeyboardButton2 = new InlineKeyboardButton();
+//        inlineKeyboardButton2.setText("Button2");
+//        inlineKeyboardButton2.setUrl("https://core.telegram.org");
 
+
+        InlineKeyboardMarkup inlineKeyboardMarkup = null;
         try {
+            inlineKeyboardMarkup = BusStationBtnsGenerator.getKeyboardMarkupForBusStations();
+            sendMessage.setReplyMarkup(inlineKeyboardMarkup);
             execute(sendMessage);
-            
+        } catch (IOException e) {
+            e.printStackTrace();
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
+
+
+//        List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
+//        List<InlineKeyboardButton> rowInline = new ArrayList<>();
+//
+//        rowInline.add(inlineKeyboardButton);
+//        rowInline.add(inlineKeyboardButton2);
+//        rowsInline.add(rowInline);
+//
+//
+//        inlineKeyboardMarkup.setKeyboard(rowsInline);
+
+
+
+
+
     }
 }

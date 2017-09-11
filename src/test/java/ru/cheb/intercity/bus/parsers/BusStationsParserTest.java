@@ -1,4 +1,4 @@
-package ru.cheb.intercity.bus.controller.parsers;
+package ru.cheb.intercity.bus.parsers;
 
 
 
@@ -19,7 +19,7 @@ import java.util.Map;
 import static org.junit.Assert.assertTrue;
 
 
-public class TownsParserTest {
+public class BusStationsParserTest {
 
 
     @Test
@@ -33,11 +33,11 @@ public class TownsParserTest {
         String methodName = "getStationsWebSiteUrl";
 
         try {
-            Method method = TownsParser.class.getDeclaredMethod(methodName, String.class, String.class);
+            Method method = BusStationsParser.class.getDeclaredMethod(methodName, String.class, String.class);
             method.setAccessible(true);
 
-            TownsParser townsParserTestObj = new TownsParser();
-            String testPropertyVal = (String) method.invoke(townsParserTestObj, testPropertiesFileName, parKeyTrue);
+            BusStationsParser busStationsParserTestObj = new BusStationsParser();
+            String testPropertyVal = (String) method.invoke(busStationsParserTestObj, testPropertiesFileName, parKeyTrue);
 
             assertTrue(testPropertyVal.equals(parValTrue));
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
@@ -78,7 +78,7 @@ public class TownsParserTest {
     @Test
     public void getTownsSchedulerUrls() {
         try {
-            Map<String, String> townsSchedulerUrls = TownsParser.getTownsSchedulerUrls();
+            Map<String, String> townsSchedulerUrls = BusStationsParser.getBusStationsSchedulerUrls();
 
             String rightBeginOfUrl = "/passengers/";
 

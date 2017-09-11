@@ -1,11 +1,11 @@
-package ru.cheb.intercity.bus.controller.parsers;
+package ru.cheb.intercity.bus.parsers;
 
 
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import ru.cheb.intercity.bus.controller.helper.PropertiesHelper;
+import ru.cheb.intercity.bus.helper.PropertiesHelper;
+import ru.cheb.intercity.bus.constants.PropertyConstants;
 
 
 import java.io.IOException;
@@ -28,8 +28,8 @@ public class BusStationSchedulerParser {
      */
     public static String getScheduler(String relationalUrl)
     {
-       String hostUrl = PropertiesHelper.getPropByKeyInProperties( ParserConstants.propertyFileName,
-                                                                   ParserConstants.propKeyHostUrl);
+       String hostUrl = PropertiesHelper.getPropByKeyInProperties( PropertyConstants.propertyFileName,
+                                                                   PropertyConstants.propHostUrl);
        String fullUrl = hostUrl + relationalUrl;
 
         try {
