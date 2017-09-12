@@ -46,8 +46,8 @@ public class BusStationsParser {
         Map<String, String> descriptionAndUrl = new LinkedHashMap<>();
 
         elements.stream().forEach(element -> {
-            String urlDescription = element.select(htmlA).attr(htmlHref);
-            String relationalUrl = element.select(htmlA).select(htmlB).text();
+            String urlDescription = element.select(htmlA).select(htmlB).text();
+            String relationalUrl = element.select(htmlA).attr(htmlHref);
 
             descriptionAndUrl.put(relationalUrl, urlDescription);
         });

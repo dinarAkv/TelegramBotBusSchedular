@@ -22,57 +22,9 @@ import static org.junit.Assert.assertTrue;
 public class BusStationsParserTest {
 
 
-    @Test
-    public void getHostTest()
-    {
-        String testPropertiesFileName = "temp.properties";
-        String parKeyTrue = "par1";
-        String parValTrue = "25678";
-        File tempFile = buildTestPropertiesFile(testPropertiesFileName, parKeyTrue, parValTrue);
-
-        String methodName = "getStationsWebSiteUrl";
-
-        try {
-            Method method = BusStationsParser.class.getDeclaredMethod(methodName, String.class, String.class);
-            method.setAccessible(true);
-
-            BusStationsParser busStationsParserTestObj = new BusStationsParser();
-            String testPropertyVal = (String) method.invoke(busStationsParserTestObj, testPropertiesFileName, parKeyTrue);
-
-            assertTrue(testPropertyVal.equals(parValTrue));
-        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            e.printStackTrace();
-        } finally {
-            if (tempFile != null){
-                tempFile.delete();
-            }
-        }
 
 
-    }
 
-    /**
-     * Function build "*.properties" file for test purposes.
-     * @param fileName - name of test file.
-     * @return - temporary file object.
-     */
-    private File buildTestPropertiesFile(String fileName, String propKey, String propVal)
-    {
-        String testFileName = new String(fileName);
-        File testPropertiesFile = new File(testFileName);
-
-
-        String parameterStr = new String(propKey + "=" + propVal);
-
-        try (PrintWriter printWriter = new PrintWriter(testPropertiesFile)) {
-            printWriter.write(parameterStr);
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return testPropertiesFile;
-    }
 
 
     @Test

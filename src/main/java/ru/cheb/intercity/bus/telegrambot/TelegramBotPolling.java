@@ -63,16 +63,6 @@ public class TelegramBotPolling extends TelegramLongPollingBot {
         sendMessage.setText(text);
 
 
-
-//        InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
-//        inlineKeyboardButton.setText("Button");
-//        inlineKeyboardButton.setUrl("https://core.telegram.org");
-//
-//        InlineKeyboardButton inlineKeyboardButton2 = new InlineKeyboardButton();
-//        inlineKeyboardButton2.setText("Button2");
-//        inlineKeyboardButton2.setUrl("https://core.telegram.org");
-
-
         InlineKeyboardMarkup inlineKeyboardMarkup = null;
         try {
             inlineKeyboardMarkup = BusStationBtnsGenerator.getKeyboardMarkupForBusStations();
@@ -83,21 +73,6 @@ public class TelegramBotPolling extends TelegramLongPollingBot {
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
-
-
-//        List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
-//        List<InlineKeyboardButton> rowInline = new ArrayList<>();
-//
-//        rowInline.add(inlineKeyboardButton);
-//        rowInline.add(inlineKeyboardButton2);
-//        rowsInline.add(rowInline);
-//
-//
-//        inlineKeyboardMarkup.setKeyboard(rowsInline);
-
-
-
-
 
     }
 }
