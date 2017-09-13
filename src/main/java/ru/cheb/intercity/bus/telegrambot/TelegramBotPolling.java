@@ -50,6 +50,8 @@ public class TelegramBotPolling extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         Message message = update.getMessage();
 
+        logger.info("YESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
+
         if (message != null && message.getText().equals(TelegramBotConstants.startCmd))
         {
             sendMsg(message, TelegramBotConstants.welcomeMessage);
