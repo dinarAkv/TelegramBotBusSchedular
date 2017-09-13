@@ -17,7 +17,7 @@ public class ParsersLoggerAspect {
     @Around("execution(ru.cheb.intercity.bus.parsers.BusStationSchedulerParser get*())")
     public Object getSchedulerLog(ProceedingJoinPoint joinPoint){
         try {
-            logger.info("HELLO AOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOPPPPPPPPPPPPPPPPPP");
+            logger.info("HELLO AOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOPPPPPPPPPPPPPPPPPPPPP");
 
             Object proceed = joinPoint.proceed();
             return proceed;
