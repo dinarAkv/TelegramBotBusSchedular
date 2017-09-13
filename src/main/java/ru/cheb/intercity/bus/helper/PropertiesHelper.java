@@ -34,7 +34,6 @@ public class PropertiesHelper {
         catch (IOException ex)
         {
             logger.error(ex.getMessage());
-            System.out.println(ex.getMessage());
         }
 
         throw new IllegalStateException();
