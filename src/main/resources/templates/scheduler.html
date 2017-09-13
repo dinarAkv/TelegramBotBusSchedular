@@ -25,9 +25,19 @@
         document.body.appendChild(div);
     }
 
+    // Add description to scheduler table.
+    function addSchedulerTableDescription() {
+        var description = [[${schedulerTableDescription}]];
+
+        var div = document.createElement('div');
+        div.innerHTML = table;
+
+        document.body.appendChild(div);
+    }
 
 
     addTableToHtmtl();
+    addSchedulerTableDescription();
 
 </script>
 

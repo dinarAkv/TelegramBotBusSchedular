@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ru.cheb.intercity.bus.constants.ControllerConstants;
 import ru.cheb.intercity.bus.constants.PropertyConstants;
 import ru.cheb.intercity.bus.helper.PropertiesHelper;
+import ru.cheb.intercity.bus.parsers.BusStationSchedulerDescription;
 import ru.cheb.intercity.bus.parsers.BusStationSchedulerParser;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,10 +23,13 @@ public class SchedulerController {
                                       @RequestParam String description)
     {
         String htmlTable = BusStationSchedulerParser.getScheduler(sourceRelationalUrl);
+        String htmlSchedulerDescription = BusStationSchedulerDescription
+                                                    .getSchedulerDescription(sourceRelationalUrl);
 
         ModelAndView mav = new ModelAndView("scheduler");
         mav.addObject("tableDescription", description);
         mav.addObject("schedulerTable", htmlTable);
+        mav.addObject("schedulerTableDescription", htmlSchedulerDescription);
 
         return mav;
     }
