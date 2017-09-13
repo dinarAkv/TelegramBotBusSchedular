@@ -51,7 +51,7 @@ public class TelegramBotPolling extends TelegramLongPollingBot {
 
         System.out.println("Start message: " + message.getText());
 
-        if (message != null && message.getText().equals("/START"))
+        if (message != null && message.getText().equals("/start"))
         {
             sendMsg(message, "Пожалуйста, выберите интересующее вас расписание автовокзала:");
         }
