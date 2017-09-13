@@ -14,13 +14,13 @@ public class ParsersLoggerAspect {
 
     final static Logger logger = Logger.getLogger(ParsersLoggerAspect.class);
 
-    @Around("execution(ru.cheb.intercity.bus.parsers.BusStationSchedulerParser get*())")
-    public Object getSchedulerLog(ProceedingJoinPoint joinPoint){
+    @Around("execution(* ru.cheb.intercity.bus.parsers.BusStationSchedulerParser.getScheduler (java.lang.String)) && args(relationalUrl)")
+    public String getSchedulerLog(ProceedingJoinPoint joinPoint, String relationalUrl){
         try {
             logger.info("HELLO AOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOPPPPPPPPPPPPPPPPPPPPP");
 
-            Object proceed = joinPoint.proceed();
-            return proceed;
+            String result = (String) joinPoint.proceed();
+            return result;
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
