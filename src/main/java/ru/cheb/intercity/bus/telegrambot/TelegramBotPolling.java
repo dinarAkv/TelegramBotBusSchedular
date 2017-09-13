@@ -49,7 +49,7 @@ public class TelegramBotPolling extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         Message message = update.getMessage();
 
-        System.out.println("Start message: " + message.getText());
+        System.out.println("YESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS Start message: " + message.getText());
 
         if (message != null && message.getText().equals("/start"))
         {
