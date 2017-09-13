@@ -36,6 +36,7 @@ public class BusStationSchedulerDescription {
             return descriptionDivHtml;
         } catch (IOException e) {
             logger.error(e.getMessage());
+            System.out.println(e.getMessage());
         }
 
         throw new IllegalStateException();

@@ -38,6 +38,7 @@ public class BusStationSchedulerParser {
             return doc.getElementsByClass(ParserConstants.schedulerTableDivHtmlClass).outerHtml();
         } catch (IOException e) {
             logger.error(e.getMessage());
+            System.out.println(e.getMessage());
         }
 
         throw new IllegalStateException();

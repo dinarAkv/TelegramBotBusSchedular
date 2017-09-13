@@ -10,7 +10,8 @@ import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import ru.cheb.intercity.bus.constants.EnvironmentVarConstants;
-import ru.cheb.intercity.bus.parsers.BusStationSchedulerParser;
+import ru.cheb.intercity.bus.constants.TelegramBotConstants;
+
 
 import java.io.IOException;
 import java.util.Map;
@@ -49,14 +50,12 @@ public class TelegramBotPolling extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         Message message = update.getMessage();
 
-        System.out.println("YESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS Start message: " + message.getText());
-
-        if (message != null && message.getText().equals("/start"))
+        if (message != null && message.getText().equals(TelegramBotConstants.startCmd))
         {
-            sendMsg(message, "Пожалуйста, выберите интересующее вас расписание автовокзала:");
+            sendMsg(message, TelegramBotConstants.welcomeMessage);
         }
         else {
-            sendMsg(message, "Uknown message.");
+            sendMsg(message, TelegramBotConstants.uknownMes);
         }
     }
 
@@ -71,6 +70,8 @@ public class TelegramBotPolling extends TelegramLongPollingBot {
         sendMessage.setChatId(message.getChatId().toString());
         sendMessage.setReplyToMessageId(message.getMessageId());
         sendMessage.setText(text);
+
+
 
 
         InlineKeyboardMarkup inlineKeyboardMarkup = null;
