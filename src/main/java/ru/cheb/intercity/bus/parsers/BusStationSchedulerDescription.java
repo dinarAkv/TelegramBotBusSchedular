@@ -4,6 +4,7 @@ package ru.cheb.intercity.bus.parsers;
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import ru.cheb.intercity.bus.constants.ParserConstants;
 import ru.cheb.intercity.bus.constants.PropertyConstants;
 import ru.cheb.intercity.bus.helper.PropertiesHelper;
 

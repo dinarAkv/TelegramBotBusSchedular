@@ -1,4 +1,4 @@
-package ru.cheb.intercity.bus.parsers;
+package ru.cheb.intercity.bus.constants;
 
 
 /**

@@ -1,5 +1,6 @@
 package ru.cheb.intercity.bus.telegrambot;
 
+import org.apache.log4j.Logger;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
@@ -9,6 +10,7 @@ import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import ru.cheb.intercity.bus.constants.EnvironmentVarConstants;
+import ru.cheb.intercity.bus.parsers.BusStationSchedulerParser;
 
 import java.io.IOException;
 import java.util.Map;
@@ -17,7 +19,7 @@ import java.util.Map;
 public class TelegramBotPolling extends TelegramLongPollingBot {
 
 
-
+    final static Logger logger = Logger.getLogger(TelegramBotPolling.class);
 
     public static void registerBot()
     {
@@ -46,7 +48,10 @@ public class TelegramBotPolling extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         Message message = update.getMessage();
-        if (message != null && message.getText().equals("hello"))
+
+        logger.info("Start message: " + message.getText());
+
+        if (message != null && message.getText().equals("/START"))
         {
             sendMsg(message, "Пожалуйста, выберите интересующее вас расписание автовокзала:");
         }
@@ -55,6 +60,11 @@ public class TelegramBotPolling extends TelegramLongPollingBot {
         }
     }
 
+    /**
+     * Function send message to telegram bot.
+     * @param message - message object to edit.
+     * @param text -
+     */
     private void sendMsg(Message message, String text) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(false);

@@ -4,6 +4,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.junit.Test;
+import ru.cheb.intercity.bus.constants.ParserConstants;
 
 import static junit.framework.TestCase.assertTrue;
 
