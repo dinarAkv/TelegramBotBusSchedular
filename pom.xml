@@ -17,6 +17,7 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <spring.boot.test.version>1.5.7.RELEASE</spring.boot.test.version>
         <telegrambot.version>3.3</telegrambot.version>
         <jsoap.version>1.10.3</jsoap.version>
         <log4j.version>1.2.17</log4j.version>
@@ -28,6 +29,14 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>${spring.boot.test.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>

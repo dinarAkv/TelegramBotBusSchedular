@@ -1,4 +1,4 @@
-package ru.cheb.intercity.bus.controller;
+package ru.cheb.intercity.bus;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,6 +15,7 @@ public class Application {
         SpringApplication.run(Application.class, args);
 
         TelegramBotPolling.registerBot();
+
     }
 
 

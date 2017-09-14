@@ -1,6 +1,7 @@
 package ru.cheb.intercity.bus.telegrambot;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
@@ -21,6 +22,10 @@ public class TelegramBotPolling extends TelegramLongPollingBot {
 
 
     final static Logger logger = Logger.getLogger(TelegramBotPolling.class);
+
+    @Autowired
+    BusStationBtnsGenerator busStationBtnsGenerator;
+
 
     public static void registerBot()
     {
@@ -76,13 +81,11 @@ public class TelegramBotPolling extends TelegramLongPollingBot {
 
         InlineKeyboardMarkup inlineKeyboardMarkup = null;
         try {
-            inlineKeyboardMarkup = BusStationBtnsGenerator.getKeyboardMarkupForBusStations();
+            inlineKeyboardMarkup = busStationBtnsGenerator.getKeyboardMarkupForBusStations();
             sendMessage.setReplyMarkup(inlineKeyboardMarkup);
             execute(sendMessage);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            logger.error(e);
         }
 
     }
