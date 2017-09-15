@@ -17,10 +17,11 @@ import ru.cheb.intercity.bus.constants.EnvironmentVarConstants;
 import ru.cheb.intercity.bus.constants.TelegramBotConstants;
 
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.Map;
 
-@Repository
+@Component
 public class TelegramBotPolling extends TelegramLongPollingBot {
 
 
@@ -29,13 +30,14 @@ public class TelegramBotPolling extends TelegramLongPollingBot {
     @Autowired
     BusStationBtnsGenerator busStationBtnsGenerator;
 
-    static {
+
+
+    static  {
         ApiContextInitializer.init();
     }
 
-    public static void registerBot()
-    {
-
+    @PostConstruct
+    public void registerBot(){
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
         try {
             telegramBotsApi.registerBot(new TelegramBotPolling());
@@ -43,6 +45,17 @@ public class TelegramBotPolling extends TelegramLongPollingBot {
             logger.error(e);
         }
     }
+
+
+//    public static void registerBot()
+//    {
+//        TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
+//        try {
+//            telegramBotsApi.registerBot(new TelegramBotPolling());
+//        } catch (TelegramApiException e) {
+//            logger.error(e);
+//        }
+//    }
 
 
     @Override
@@ -56,6 +69,7 @@ public class TelegramBotPolling extends TelegramLongPollingBot {
         Map<String, String> env = System.getenv();
         return env.get(EnvironmentVarConstants.botUsername);
     }
+
 
     @Override
     public void onUpdateReceived(Update update) {
@@ -82,7 +96,7 @@ public class TelegramBotPolling extends TelegramLongPollingBot {
         sendMessage.setReplyToMessageId(message.getMessageId());
         sendMessage.setText(text);
 
-
+//        BusStationBtnsGenerator busStationBtnsGenerator = new BusStationBtnsGeneratorImpl();
 
 
         InlineKeyboardMarkup inlineKeyboardMarkup = null;

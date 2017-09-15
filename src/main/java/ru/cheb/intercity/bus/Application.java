@@ -14,7 +14,7 @@ public class Application {
 
         SpringApplication.run(Application.class, args);
 
-        TelegramBotPolling.registerBot();
+//        TelegramBotPolling.registerBot();
     }
 
 
