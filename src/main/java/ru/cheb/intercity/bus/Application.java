@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import ru.cheb.intercity.bus.telegrambot.TelegramBotPolling;
 
 
-// Token: 377263517:AAH5mLjwUv0-ROXzLRkiml28V9DXf8bqW6E
+
 
 @SpringBootApplication
 public class Application {
@@ -15,7 +15,6 @@ public class Application {
         SpringApplication.run(Application.class, args);
 
         TelegramBotPolling.registerBot();
-
     }
 
 

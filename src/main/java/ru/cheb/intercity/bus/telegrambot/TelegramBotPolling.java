@@ -34,7 +34,7 @@ public class TelegramBotPolling extends TelegramLongPollingBot {
         try {
             telegramBotsApi.registerBot(new TelegramBotPolling());
         } catch (TelegramApiException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
     }
 
