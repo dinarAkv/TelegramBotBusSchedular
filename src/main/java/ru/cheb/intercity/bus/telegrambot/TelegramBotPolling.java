@@ -2,6 +2,8 @@ package ru.cheb.intercity.bus.telegrambot;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
@@ -10,6 +12,7 @@ import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
+import org.telegram.telegrambots.generics.LongPollingBot;
 import ru.cheb.intercity.bus.constants.EnvironmentVarConstants;
 import ru.cheb.intercity.bus.constants.TelegramBotConstants;
 
@@ -17,7 +20,7 @@ import ru.cheb.intercity.bus.constants.TelegramBotConstants;
 import java.io.IOException;
 import java.util.Map;
 
-
+@Repository
 public class TelegramBotPolling extends TelegramLongPollingBot {
 
 
@@ -26,10 +29,13 @@ public class TelegramBotPolling extends TelegramLongPollingBot {
     @Autowired
     BusStationBtnsGenerator busStationBtnsGenerator;
 
+    static {
+        ApiContextInitializer.init();
+    }
 
     public static void registerBot()
     {
-        ApiContextInitializer.init();
+
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
         try {
             telegramBotsApi.registerBot(new TelegramBotPolling());
