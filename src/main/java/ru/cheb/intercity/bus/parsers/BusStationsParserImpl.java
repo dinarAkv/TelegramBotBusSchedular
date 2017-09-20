@@ -10,6 +10,7 @@ import ru.cheb.intercity.bus.constants.ParserConstants;
 import ru.cheb.intercity.bus.helper.PropertiesHelper;
 import ru.cheb.intercity.bus.helper.PropertiesHelperImpl;
 import ru.cheb.intercity.bus.constants.PropertyConstants;
+import ru.cheb.intercity.bus.logger.MethodLogger;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -29,6 +30,7 @@ public class BusStationsParserImpl implements BusStationsParser {
     @Autowired
     PropertiesHelper propertiesHelper;
 
+    @MethodLogger
     @Override
     public Map<String,String> getBusStationsSchedulerUrls() throws IOException {
         String schedulerUrl = propertiesHelper.getPropByKeyInProperties(PropertyConstants.propertyFileName,

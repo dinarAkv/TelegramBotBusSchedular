@@ -9,4 +9,5 @@ public class PropertyConstants {
    public static String propHostUrl = "hostUrl";
    public static String propertyFileName = "./src/main/resources/params.properties";
 
+   public static final String logSwitcher = "logSwitcher";
 }

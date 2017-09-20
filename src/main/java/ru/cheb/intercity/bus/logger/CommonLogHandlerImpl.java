@@ -1,14 +1,20 @@
-package ru.cheb.intercity.bus.logger.helper;
+package ru.cheb.intercity.bus.logger;
 
 import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.cheb.intercity.bus.constants.EnvironmentVarConstants;
+import ru.cheb.intercity.bus.helper.EnvVarHelper;
+import ru.cheb.intercity.bus.logger.helper.PrintSelector;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+@Aspect
 @Component
 public class CommonLogHandlerImpl implements CommonLogHandler {
 
@@ -30,8 +36,8 @@ public class CommonLogHandlerImpl implements CommonLogHandler {
     @Autowired
     PrintSelector printSelector;
 
-
-
+    @Autowired
+    EnvVarHelper envVarHelper;
 
 
 
@@ -40,15 +46,46 @@ public class CommonLogHandlerImpl implements CommonLogHandler {
      * @param joinPoint - contain method context.
      * @return - return method value.
      */
+    @Around("@annotation(ru.cheb.intercity.bus.logger.MethodLogger) && execution(public * *(..))")
     @Override
     public Object handle(ProceedingJoinPoint joinPoint)
     {
-        System.out.println(CALL_METHOD + joinPoint.getSignature().toShortString());
 
-        printArgumentValues(joinPoint);
+        if (getEnvLogSwitcherVar()){
+            System.out.println(CALL_METHOD + joinPoint.getSignature().toShortString());
 
-        return printReturnValue(joinPoint);
+            printArgumentValues(joinPoint);
+
+            Object returnObj = printReturnValue(joinPoint);
+
+            return returnObj;
+        }
+        else {
+            try {
+                return joinPoint.proceed();
+            } catch (Throwable throwable) {
+                logger.error(throwable);
+            }
+        }
+
+
+        throw new IllegalStateException();
     }
+
+
+    /**
+     * Function return enviroment variable for switch on (off) logger.
+     * @return true - logger switch on, false - logger switch off.
+     */
+    private boolean getEnvLogSwitcherVar(){
+
+        String envValue = envVarHelper.getEnvVar(EnvironmentVarConstants.logSwitcher);
+
+        boolean switcher = Boolean.parseBoolean(envValue);
+
+        return switcher;
+    }
+
 
 
     /**

@@ -15,13 +15,14 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import ru.cheb.intercity.bus.constants.EnvironmentVarConstants;
 import ru.cheb.intercity.bus.constants.TelegramBotConstants;
+import ru.cheb.intercity.bus.helper.EnvVarHelper;
 
 
 import javax.annotation.PostConstruct;
 import java.util.Map;
 
 @Component
-public class TelegramBotPolling extends TelegramLongPollingBot {
+public class TelegramBotPolling extends TelegramLongPollingBot  {
 
 
     final static Logger logger = Logger.getLogger(TelegramBotPolling.class);
@@ -29,7 +30,8 @@ public class TelegramBotPolling extends TelegramLongPollingBot {
     @Autowired
     BusStationBtnsGenerator busStationBtnsGenerator;
 
-
+    @Autowired
+    EnvVarHelper envVarHelper;
 
     static  {
         ApiContextInitializer.init();
@@ -37,10 +39,6 @@ public class TelegramBotPolling extends TelegramLongPollingBot {
 
     @PostConstruct
     public void registerBot(){
-
-
-
-
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
         try {
             telegramBotsApi.registerBot(this);
@@ -52,14 +50,12 @@ public class TelegramBotPolling extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
-        Map<String, String> env = System.getenv();
-        return env.get(EnvironmentVarConstants.botTokenEnv);
+        return envVarHelper.getEnvVar(EnvironmentVarConstants.botTokenEnv);
     }
 
     @Override
     public String getBotUsername() {
-        Map<String, String> env = System.getenv();
-        return env.get(EnvironmentVarConstants.botUsername);
+        return  envVarHelper.getEnvVar(EnvironmentVarConstants.botUsername);
     }
 
 

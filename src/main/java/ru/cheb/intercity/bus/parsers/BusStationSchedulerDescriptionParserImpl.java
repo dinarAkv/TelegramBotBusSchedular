@@ -10,6 +10,7 @@ import ru.cheb.intercity.bus.constants.ParserConstants;
 import ru.cheb.intercity.bus.constants.PropertyConstants;
 import ru.cheb.intercity.bus.helper.PropertiesHelper;
 import ru.cheb.intercity.bus.helper.PropertiesHelperImpl;
+import ru.cheb.intercity.bus.logger.MethodLogger;
 
 import java.io.IOException;
 
@@ -21,6 +22,7 @@ public class BusStationSchedulerDescriptionParserImpl implements BusStationSched
     @Autowired
     PropertiesHelper propertiesHelper;
 
+    @MethodLogger
     @Override
     public String getSchedulerDescription(String relationalUrl)
     {

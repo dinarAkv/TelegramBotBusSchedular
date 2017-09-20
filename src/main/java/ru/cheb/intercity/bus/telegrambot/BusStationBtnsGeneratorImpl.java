@@ -6,7 +6,9 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import ru.cheb.intercity.bus.constants.ControllerConstants;
+import ru.cheb.intercity.bus.helper.EnvVarHelper;
 import ru.cheb.intercity.bus.helper.UrlHelper;
+import ru.cheb.intercity.bus.logger.MethodLogger;
 import ru.cheb.intercity.bus.parsers.BusStationsParser;
 import ru.cheb.intercity.bus.constants.EnvironmentVarConstants;
 
@@ -27,6 +29,10 @@ public class BusStationBtnsGeneratorImpl implements BusStationBtnsGenerator {
     @Autowired
     UrlHelper urlHelper;
 
+    @Autowired
+    EnvVarHelper envVarHelper;
+
+    @MethodLogger
     @Override
     public InlineKeyboardMarkup getKeyboardMarkupForBusStations() throws Exception {
 
@@ -81,7 +87,7 @@ public class BusStationBtnsGeneratorImpl implements BusStationBtnsGenerator {
      */
     private String getRequestToSchedulerControllerUrl(Map.Entry<String, String> busStationUrlVsDescription)
     {
-        String busStationHostUrl = System.getenv().get(EnvironmentVarConstants.busStationHostUrl);
+        String busStationHostUrl = envVarHelper.getEnvVar(EnvironmentVarConstants.busStationHostUrl);
 
         HashMap<String, String> queryParNameVsValue = new HashMap<>();
         queryParNameVsValue.put(ControllerConstants.relationalUrlParName, busStationUrlVsDescription.getKey());
