@@ -88,7 +88,8 @@ public class TelegramBotPolling extends TelegramLongPollingBot  {
 
         InlineKeyboardMarkup inlineKeyboardMarkup = null;
         try {
-            inlineKeyboardMarkup = busStationBtnsGenerator.getKeyboardMarkupForBusStations();
+            inlineKeyboardMarkup = busStationBtnsGenerator
+                                        .getKeyboardMarkupForBusStations(message.getChatId());
             sendMessage.setReplyMarkup(inlineKeyboardMarkup);
             execute(sendMessage);
         } catch (Exception e) {

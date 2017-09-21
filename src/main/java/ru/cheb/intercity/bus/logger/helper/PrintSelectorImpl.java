@@ -6,6 +6,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class contain method to help print different type of variables.
+ */
 @Component
 public class PrintSelectorImpl implements PrintSelector {
 
