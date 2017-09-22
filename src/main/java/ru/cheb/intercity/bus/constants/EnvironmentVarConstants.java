@@ -10,4 +10,8 @@ public class EnvironmentVarConstants {
     public static final String botUsername = "TELEGRAM_BOT_USERNAME";
     public static final String botTokenEnv = "TELEGRAM_BOT_TOKEN";
 
+    public static final String logSwitcher = "TELEGRAM_BOT_LOG_SWITCHER";
+
+    public static final String forTest = "TELEGRAM_BOT_VAR_FOR_TEST";
+
 }

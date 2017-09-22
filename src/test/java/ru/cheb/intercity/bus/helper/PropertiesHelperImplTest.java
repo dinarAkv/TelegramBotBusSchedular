@@ -2,19 +2,23 @@ package ru.cheb.intercity.bus.helper;
 
 import org.junit.Assert;
 import org.junit.Test;
-import ru.cheb.intercity.bus.parsers.BusStationsParser;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import static org.junit.Assert.assertTrue;
 
-public class PropertiesHelperTest {
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class PropertiesHelperImplTest {
 
-
+    @Autowired
+    PropertiesHelper propertiesHelper;
 
     @Test
     public void getHostTest()
@@ -24,7 +28,7 @@ public class PropertiesHelperTest {
         String parValTrue = "25678";
         File tempFile = buildTestPropertiesFile(testPropertiesFileName, parKeyTrue, parValTrue);
 
-        String testPropertyVal = PropertiesHelper.getPropByKeyInProperties(testPropertiesFileName, parKeyTrue);
+        String testPropertyVal = propertiesHelper.getPropByKeyInProperties(testPropertiesFileName, parKeyTrue);
 
         Assert.assertTrue(testPropertyVal.equals(parValTrue));
 

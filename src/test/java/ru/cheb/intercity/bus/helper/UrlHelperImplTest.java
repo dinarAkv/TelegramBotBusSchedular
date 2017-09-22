@@ -3,11 +3,20 @@ package ru.cheb.intercity.bus.helper;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.net.URISyntaxException;
 import java.util.HashMap;
 
-public class UrlHelperTest {
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class UrlHelperImplTest {
+
+    @Autowired
+    UrlHelper urlHelper;
 
     @Test
     public void setQueryPar() {
@@ -24,12 +33,8 @@ public class UrlHelperTest {
 
         String trueUrl = "http://test.org?key1=val1&key2=val2";
 
-        try {
-            String resultUrl = UrlHelper.setQueryPar(mainUrl,queryPar);
-            Assert.assertTrue(resultUrl.equals(trueUrl));
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+        String resultUrl = urlHelper.setQueryPar(mainUrl,queryPar);
+        Assert.assertTrue(resultUrl.equals(trueUrl));
     }
 
 }
