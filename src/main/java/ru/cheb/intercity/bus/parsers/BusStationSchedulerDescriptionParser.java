@@ -1,8 +1,6 @@
 package ru.cheb.intercity.bus.parsers;
 
-/**
- * Function parse description of scheduler table.
- */
+
 public interface BusStationSchedulerDescriptionParser {
 
     /**

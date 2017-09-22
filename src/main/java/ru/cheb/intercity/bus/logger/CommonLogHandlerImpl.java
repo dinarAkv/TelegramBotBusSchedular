@@ -14,6 +14,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class contain common method for logging most of methods.
+ */
 @Aspect
 @Component
 public class CommonLogHandlerImpl implements CommonLogHandler {
