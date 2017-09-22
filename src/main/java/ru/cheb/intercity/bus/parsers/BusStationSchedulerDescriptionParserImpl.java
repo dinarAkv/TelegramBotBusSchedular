@@ -14,6 +14,9 @@ import ru.cheb.intercity.bus.logger.MethodLogger;
 
 import java.io.IOException;
 
+/**
+ * Class contain methods for parsing description of scheduler table.
+ */
 @Component
 public class BusStationSchedulerDescriptionParserImpl implements BusStationSchedulerDescriptionParser {
 

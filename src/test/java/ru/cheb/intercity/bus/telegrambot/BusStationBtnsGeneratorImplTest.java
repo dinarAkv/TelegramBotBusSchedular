@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import ru.cheb.intercity.bus.constants.ConnectionConstants;
+import ru.cheb.intercity.bus.constants.ControllerConstants;
 import ru.cheb.intercity.bus.parsers.BusStationsParser;
 import ru.cheb.intercity.bus.parsers.BusStationsParserImpl;
 import ru.cheb.intercity.bus.parsers.BusStationsParserImplTest;
@@ -20,6 +21,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -33,14 +36,19 @@ public class BusStationBtnsGeneratorImplTest {
     @Autowired
     BusStationsParser stationsParser;
 
+    private long fakeChatId = 777L;
+
     @Test
     public void getKeyboardMarkupForBusStations() {
 
-        List<List<InlineKeyboardButton>> rows = getListOfButtonsFromPrivateMethod();
-        int trueSize = rows.size();
-
         try {
-            InlineKeyboardMarkup keyboardMarkupForBusStations = busStationBtnsGenerator.getKeyboardMarkupForBusStations();
+            List<List<InlineKeyboardButton>> rows = busStationBtnsGenerator.getKeyboardMarkupForBusStations(fakeChatId).getKeyboard();
+
+            checkStationButtonsTest(rows);
+
+            int trueSize = rows.size();
+
+            InlineKeyboardMarkup keyboardMarkupForBusStations = busStationBtnsGenerator.getKeyboardMarkupForBusStations(fakeChatId);
             int resultSize = keyboardMarkupForBusStations.getKeyboard().size();
             Assert.assertTrue(trueSize == resultSize);
         } catch (Exception e) {
@@ -48,13 +56,24 @@ public class BusStationBtnsGeneratorImplTest {
         }
     }
 
-    @Test
-    public void getBusStationButtonsTest(){
+    /**
+     * Check text and url of every {@link InlineKeyboardButton}.
+     * @param rows - every row contain list of buttons in this line.
+     */
+    private void checkStationButtonsTest(List<List<InlineKeyboardButton>> rows){
 
-        List<List<InlineKeyboardButton>> rows = getListOfButtonsFromPrivateMethod();
+        try {
+            rows = busStationBtnsGenerator.getKeyboardMarkupForBusStations(fakeChatId).getKeyboard();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         rows.forEach(buttons->{
             buttons.forEach(button->{
+                checkChatIdUrlPar(button.getUrl());
+                checkDescriptionUrlPar(button.getUrl());
+                checkRelationalUrlPar(button.getUrl());
+
                 Assert.assertFalse(button.getText().isEmpty());
                 Assert.assertTrue(button.getUrl().contains("/passengers/raspisanie/"));
             });
@@ -63,58 +82,37 @@ public class BusStationBtnsGeneratorImplTest {
 
 
     /**
-     * Function return list of {@link InlineKeyboardButton} from private method
-     * for test purposes.
-     * @return - list of {@link InlineKeyboardButton} objects.
+     * Check if button url contain query parameter {@link ControllerConstants#chatIdPar}.
+     * @param url - url to bus station scheduler web-page.
      */
-    private List<List<InlineKeyboardButton>> getListOfButtonsFromPrivateMethod()
-    {
-        String methodName = "getBusStationButtons";
+    private void checkChatIdUrlPar(String url){
 
-        Method method = null;
-        try {
-            method = busStationBtnsGenerator.getClass().getDeclaredMethod(methodName);
-            method.setAccessible(true);
-            List<List<InlineKeyboardButton>> rows = (List<List<InlineKeyboardButton>>) method.invoke(busStationBtnsGenerator,null);
+        Pattern p = Pattern.compile("^.+" + ControllerConstants.chatIdPar + "=.+$");
+        Matcher matcher = p.matcher(url);
 
-            return rows;
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            logger.error(e);
-        }
-
-        throw new IllegalStateException();
+        Assert.assertTrue(matcher.matches());
     }
 
+    /**
+     * Check if button url contain query parameter {@link ControllerConstants#stationDescriptionPar}.
+     * @param url - url to bus station scheduler web-page.
+     */
+    private void checkDescriptionUrlPar(String url){
+        Pattern p = Pattern.compile("^.+" + ControllerConstants.stationDescriptionPar + "=.+$");
+        Matcher matcher = p.matcher(url);
 
-    @Test
-    public void getRequestToSchedulerControllerUrlTest() throws Exception {
-        String methodName = "getRequestToSchedulerControllerUrl";
+        Assert.assertTrue(matcher.matches());
+    }
 
-        String mainUrlTrue = "http://localhost:" + ConnectionConstants.port + "/scheduler";
+    /**
+     * Check if button url contain query parameter {@link ControllerConstants#relationalUrlParName}.
+     * @param url - url to bus station scheduler web-page.
+     */
+    private void checkRelationalUrlPar(String url){
+        Pattern p = Pattern.compile("^.+" + ControllerConstants.relationalUrlParName + "=.+$");
+        Matcher matcher = p.matcher(url);
 
-
-        Map<String, String> busStationSchedulerUrlsVsDescriptions = stationsParser.getBusStationsSchedulerUrls();
-        busStationSchedulerUrlsVsDescriptions.entrySet().forEach(urlVsDescription->{
-            Method method = null;
-            try {
-                method = busStationBtnsGenerator.getClass().getDeclaredMethod(methodName, Map.Entry.class);
-                method.setAccessible(true);
-                String requestUrl = (String) method.invoke(busStationBtnsGenerator,urlVsDescription);
-
-                Assert.assertTrue(requestUrl.startsWith(mainUrlTrue));
-
-                String withoutHttp = requestUrl.replaceAll("http://", "");
-                String replaced2FToSlash = withoutHttp.replaceAll("%2F", "/");// replace %2F to /
-
-                Assert.assertTrue(replaced2FToSlash.contains(urlVsDescription.getKey()));
-
-            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        });
-
-
-
+        Assert.assertTrue(matcher.matches());
     }
 
 }

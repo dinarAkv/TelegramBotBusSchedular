@@ -13,6 +13,8 @@ import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
+import ru.cheb.intercity.bus.botainio.BotanTrack;
+import ru.cheb.intercity.bus.constants.BotanIOConstants;
 import ru.cheb.intercity.bus.constants.EnvironmentVarConstants;
 import ru.cheb.intercity.bus.constants.TelegramBotConstants;
 import ru.cheb.intercity.bus.helper.EnvVarHelper;
@@ -32,6 +34,9 @@ public class TelegramBotPolling extends TelegramLongPollingBot  {
 
     @Autowired
     EnvVarHelper envVarHelper;
+
+    @Autowired
+    BotanTrack botanTrack;
 
     static  {
         ApiContextInitializer.init();
@@ -78,6 +83,9 @@ public class TelegramBotPolling extends TelegramLongPollingBot  {
      * @param text -
      */
     private void sendMsg(Message message, String text) {
+
+        botanTrack.trackParameter(message.getChatId().toString(), message, BotanIOConstants.messagesFromUser);
+
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(false);
         sendMessage.setChatId(message.getChatId().toString());
@@ -88,7 +96,8 @@ public class TelegramBotPolling extends TelegramLongPollingBot  {
 
         InlineKeyboardMarkup inlineKeyboardMarkup = null;
         try {
-            inlineKeyboardMarkup = busStationBtnsGenerator.getKeyboardMarkupForBusStations();
+            inlineKeyboardMarkup = busStationBtnsGenerator
+                                        .getKeyboardMarkupForBusStations(message.getChatId());
             sendMessage.setReplyMarkup(inlineKeyboardMarkup);
             execute(sendMessage);
         } catch (Exception e) {

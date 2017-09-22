@@ -16,7 +16,9 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-
+/**
+ * This class parses bus stations url and description in Chuvash republic.
+ */
 @Component
 public class BusStationsParserImpl implements BusStationsParser {
 
@@ -30,6 +32,13 @@ public class BusStationsParserImpl implements BusStationsParser {
     @Autowired
     PropertiesHelper propertiesHelper;
 
+    /**
+     * Function parse web-page with all intercity bus stations
+     * of Chuvash republic.
+     * @return - map, kye is relational url of concrete station
+     *  and value is brief description of this station (where station locate).
+     * @throws IOException
+     */
     @MethodLogger
     @Override
     public Map<String,String> getBusStationsSchedulerUrls() throws IOException {

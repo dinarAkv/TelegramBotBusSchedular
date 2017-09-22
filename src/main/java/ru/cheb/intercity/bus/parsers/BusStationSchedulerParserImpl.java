@@ -15,6 +15,9 @@ import ru.cheb.intercity.bus.logger.MethodLogger;
 
 import java.io.IOException;
 
+/**
+ * This parser get information about scheduler of concrete bus station.
+ */
 @Component
 public class BusStationSchedulerParserImpl implements BusStationSchedulerParser {
 
@@ -23,6 +26,11 @@ public class BusStationSchedulerParserImpl implements BusStationSchedulerParser 
     @Autowired
     PropertiesHelper propertiesHelper;
 
+    /**
+     * Function return html text of scheduler table.
+     * @param relationalUrl - relational url of concrete bus station.
+     * @return - html text of scheduler table. Return div element with scheduler table.
+     */
     @MethodLogger
     @Override
     public String getScheduler(String relationalUrl)
