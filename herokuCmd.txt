@@ -1,0 +1,5 @@
+1) Stop to deploying application:
+heroku ps:scale web=0
+
+2) Start application from command "heroku ps:scale web=0":
+heroku ps:scale web=1 --app appName
