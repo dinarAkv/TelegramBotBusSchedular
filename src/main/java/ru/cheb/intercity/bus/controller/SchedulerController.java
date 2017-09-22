@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ru.cheb.intercity.bus.botainio.BotanTrack;
 
+
 import ru.cheb.intercity.bus.botainio.BusStation;
+
 
 import ru.cheb.intercity.bus.constants.BotanIOConstants;
 import ru.cheb.intercity.bus.constants.ControllerConstants;
@@ -37,7 +39,9 @@ public class SchedulerController {
     {
 
 
+
         botanTrack.trackParameter(chatId, new BusStation(description), BotanIOConstants.userClickToStationButton);
+
 
 
         String htmlTable = schedulerParser.getScheduler(sourceRelationalUrl);
