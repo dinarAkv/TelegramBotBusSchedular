@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ru.cheb.intercity.bus.botainio.BotanTrack;
+<<<<<<< HEAD
 import ru.cheb.intercity.bus.botainio.BusStation;
+=======
+>>>>>>> 1d31c1b37e1377333ffd33cb3827281f57de48a9
 import ru.cheb.intercity.bus.constants.BotanIOConstants;
 import ru.cheb.intercity.bus.constants.ControllerConstants;
 import ru.cheb.intercity.bus.parsers.BusStationSchedulerDescriptionParser;
@@ -33,8 +36,12 @@ public class SchedulerController {
                                       @RequestParam String description,
                                       @RequestParam String chatId)
     {
+<<<<<<< HEAD
 
         botanTrack.trackParameter(chatId, new BusStation(description), BotanIOConstants.userClickToStationButton);
+=======
+        botanTrack.trackParameter(description, BotanIOConstants.userClickToStationButton);
+>>>>>>> 1d31c1b37e1377333ffd33cb3827281f57de48a9
 
         String htmlTable = schedulerParser.getScheduler(sourceRelationalUrl);
         String htmlSchedulerDescription = descriptionParser.getSchedulerDescription(sourceRelationalUrl);
