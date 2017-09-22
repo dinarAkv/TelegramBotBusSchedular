@@ -10,5 +10,5 @@ public interface BotanTrack {
     void trackParameter( String userId, Object obj, String keyName);
 
 
-    void trackParameter(Object obj, String keyName);
+
 }

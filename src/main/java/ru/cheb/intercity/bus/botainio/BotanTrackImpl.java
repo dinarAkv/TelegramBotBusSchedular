@@ -24,6 +24,8 @@ public class BotanTrackImpl implements BotanTrack{
     public void trackParameter(String chatId, Object obj, String keyName) {
         try (CloseableHttpAsyncClient client = HttpAsyncClients.createDefault()) {
 
+            String string = new String("value:" + obj.toString());
+
             client.start();
             Botan botan = new Botan(client, new ObjectMapper());
             botan.track(BotanIOConstants.yandexAppMetricaToken, chatId, obj, keyName).get();
@@ -33,14 +35,4 @@ public class BotanTrackImpl implements BotanTrack{
         }
     }
 
-
-    @Override
-    public void trackParameter(Object obj, String keyName) {
-        if (chatId != null){
-
-        }
-        else {
-            throw new IllegalStateException();
-        }
-    }
 }
